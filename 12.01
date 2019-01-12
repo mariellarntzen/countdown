@@ -1,0 +1,65 @@
+//
+//  ViewController.swift
+//  Countdown3
+//
+//  Created by Mariell Arntzen on 17/12/2018.
+//  Copyright © 2018 Mariell Arntzen. All rights reserved.
+//
+
+import UIKit
+
+class ViewController: UIViewController {
+
+    var days = 365
+    var timer = Timer()
+    
+    @IBOutlet weak var label: UILabel!
+    
+    @IBOutlet weak var sliderOutlet: UISlider!
+    @IBAction func slider(_ sender: UISlider) {
+        days = Int(sender.value)
+        label.text = String(days) + " days"
+    }
+    
+    @IBOutlet weak var startOutlet: UIButton!
+    @IBAction func start(_ sender: Any) {
+        timer = Timer.scheduledTimer(timeInterval: 86400, target: self, selector: #selector(ViewController.counter), userInfo: nil, repeats: true)
+        //sliderOutlet.isHidden = true
+        //startOutlet.isHidden =  true
+    }
+    
+    @objc func counter()
+    {
+        days -= 1
+        label.text = String(days) + " days"
+        
+        if (days == 0)
+        {
+        timer.invalidate()
+            
+            sliderOutlet.isHidden = false
+            startOutlet.isHidden = false
+        }
+    }
+    
+    @IBOutlet weak var stopOutlet: UIButton!
+    @IBAction func stop(_ sender: Any)
+    {
+        timer.invalidate()
+        days = 365
+        sliderOutlet.setValue(365, animated: true)
+        label.text = "365 days"
+        
+        sliderOutlet.isHidden = false
+        startOutlet.isHidden = false
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+
+
+}
+
